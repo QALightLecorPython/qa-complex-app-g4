@@ -157,3 +157,50 @@ class TestStartPage:
         assert hello_message.text == f"Hello {username_value.lower()}, your feed is empty."
         assert driver.find_element(by=By.XPATH, value=".//strong").text == username_value.lower()
         self.log.info("Registration for user '%s' was success and verified", username_value)
+
+    def test_register_1(self):
+        """
+        - Open start page
+        - Fill email, login and password fields
+        - Click on Sign Up button
+        - Verify registration is successful
+        """
+        # Create driver
+        driver = WebDriver(executable_path="/Users/deniskondratuk/PycharmProjects/qa-complex-app-g4/chromedriver")
+
+        # Open start page
+        driver.get("https://qa-complex-app-for-testing.herokuapp.com")
+        self.log.debug("Open page")
+
+        # Fill username
+        user = self.random_str()
+        username_value = f"{user}{self.random_num()}"
+        username = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
+        username.clear()
+        username.send_keys(username_value)
+
+        # Fill email
+        email_value = f"{user}{self.random_num()}@mail.com"
+        email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
+        email.clear()
+        email.send_keys(email_value)
+
+        # Fill password
+        password_value = f"PwD{self.random_num()}"
+        password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
+        password.clear()
+        password.send_keys(password_value)
+        self.log.info("Fields were filled")
+        sleep(1)
+
+        # Click on Sign Up button
+        driver.find_element(by=By.XPATH, value=".//button[@type='submit']").click()
+        self.log.info("User was registered")
+        sleep(1)
+
+        # Verify register success
+        hello_message = driver.find_element(by=By.XPATH, value=".//h2")
+        assert username_value.lower() in hello_message.text
+        assert hello_message.text == f"Hello {username_value.lower()}, your feed is empty."
+        assert driver.find_element(by=By.XPATH, value=".//strong").text == username_value.lower()
+        self.log.info("Registration for user '%s' was success and verified", username_value)
