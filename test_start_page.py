@@ -139,7 +139,7 @@ class TestStartPage:
         email.send_keys(email_value)
 
         # Fill password
-        password_value = f"{self.random_str(6)}{self.random_num()}"
+        password_value = f"PwD{self.random_num()}"
         password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
         password.clear()
         password.send_keys(password_value)
