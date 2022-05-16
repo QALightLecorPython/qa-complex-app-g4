@@ -1,8 +1,7 @@
-from time import sleep
-
 from constants.start_page import StartPageConstants
 from pages.base_page import BasePage
-from pages.utils import log_wrapper
+from pages.hello_user_page import HelloUserPage
+from pages.utils import log_wrapper, wait_until_ok
 
 
 class StartPage(BasePage):
@@ -17,6 +16,7 @@ class StartPage(BasePage):
         self.fill_field(xpath=self.constants.SIGN_IN_USERNAME_XPATH, value=user.username)
         self.fill_field(xpath=self.constants.SIGN_IN_PASSWORD_XPATH, value=user.password)
         self.click(xpath=self.constants.SIGN_IN_BUTTON_XPATH)
+        return HelloUserPage(self.driver)
 
     @log_wrapper
     def verify_sign_in_error(self):
@@ -30,19 +30,12 @@ class StartPage(BasePage):
         self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_XPATH, value=user.username)
         self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_XPATH, value=user.email)
         self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_XPATH, value=user.password)
-        sleep(1)
+        self.click_sign_up_and_verify()
+        return HelloUserPage(self.driver)
+
+    @wait_until_ok(timeout=10, period=1)
+    @log_wrapper
+    def click_sign_up_and_verify(self):
+        """Click sign up and verify that button doesn't exists anymore"""
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
-
-    @log_wrapper
-    def verify_success_sign_up(self, username):
-        """Verify hello message for a new user"""
-        hello_message = self.wait_until_displayed(xpath=self.constants.SUCCESS_MESSAGE_XPATH)
-        assert username.lower() in hello_message.text
-        assert hello_message.text == self.constants.SUCCESS_MESSAGE_TEXT.format(username=username.lower())
-        assert self.wait_until_displayed(xpath=self.constants.SUCCESS_MESSAGE_USERNAME_XPATH).text == username.lower()
-
-    # FixMe: Move to ProfilePage object once created
-    @log_wrapper
-    def logout(self):
-        """Sign out from user profile"""
-        self.click(self.constants.SIGN_OUT_BUTTON_XPATH)
+        assert not self.is_element_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)

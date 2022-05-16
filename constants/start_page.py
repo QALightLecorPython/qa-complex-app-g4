@@ -11,10 +11,3 @@ class StartPageConstants:
     SIGN_UP_EMAIL_XPATH = ".//input[@id='email-register']"
     SIGN_UP_PASSWORD_XPATH = ".//input[@id='password-register']"
     SIGN_UP_BUTTON_XPATH = ".//button[@type='submit']"
-
-    # Profile page
-    # FixMe: Move to ProfilePage object once created
-    SUCCESS_MESSAGE_XPATH = ".//h2"
-    SUCCESS_MESSAGE_USERNAME_XPATH = ".//strong"
-    SUCCESS_MESSAGE_TEXT = "Hello {username}, your feed is empty."
-    SIGN_OUT_BUTTON_XPATH = ".//button[text()='Sign Out']"
