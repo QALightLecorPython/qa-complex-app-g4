@@ -15,6 +15,14 @@ def random_str(length=5):
 class User:
 
     def __init__(self, username="", email="", password=""):
-        self.username = username if username else f"{random_str()}{random_num()}"
-        self.email = email if email else f"{self.username}@mail.com"
-        self.password = password if password else f"{random_str(7)}{random_num()}"
+        self.username = username
+        self.email = email
+        self.password = password
+        self.posts = []
+
+    def fill_properties(self):
+        """Generate random values for user fields"""
+        variety = random_num()
+        self.username = f"{random_str()}{variety}"
+        self.email = f"{self.username}@mail.com"
+        self.password = f"PassWord{variety}"

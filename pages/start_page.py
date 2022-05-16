@@ -12,10 +12,10 @@ class StartPage(BasePage):
         super().__init__(driver)
         self.constants = StartPageConstants()
 
-    def sign_in(self, username="", password=""):
+    def sign_in(self, user):
         """Sign in using provided values"""
-        self.fill_field(xpath=self.constants.SIGN_IN_USERNAME_XPATH, value=username)
-        self.fill_field(xpath=self.constants.SIGN_IN_PASSWORD_XPATH, value=password)
+        self.fill_field(xpath=self.constants.SIGN_IN_USERNAME_XPATH, value=user.username)
+        self.fill_field(xpath=self.constants.SIGN_IN_PASSWORD_XPATH, value=user.password)
         self.click(xpath=self.constants.SIGN_IN_BUTTON_XPATH)
 
     def verify_sign_in_error(self):

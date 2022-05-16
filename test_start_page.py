@@ -21,7 +21,9 @@ class TestStartPage:
 
     @pytest.fixture(scope="function")
     def random_user(self):
-        return User()
+        user = User()
+        user.fill_properties()
+        return user
 
     @pytest.fixture(scope="function")
     def registered_user(self, start_page, random_user):
@@ -44,7 +46,7 @@ class TestStartPage:
         # Clear field login
         # Clear field password
         # Click on 'Sign In' button
-        start_page.sign_in()
+        start_page.sign_in(User())
         self.log.info("Empty string user tried to signed in")
 
         # Verify error message
@@ -65,7 +67,7 @@ class TestStartPage:
         # Fill field login
         # Fill field password
         # Click on 'Sign In' button
-        start_page.sign_in(username=random_user.username, password=random_user.password)
+        start_page.sign_in(random_user)
         self.log.info("Empty string user tried to signed in")
 
         # Verify error message
@@ -100,7 +102,7 @@ class TestStartPage:
             - Sign in as the user
             - Verify the result
         """
-        start_page.sign_in(username=registered_user.username, password=registered_user.password)
+        start_page.sign_in(registered_user)
         self.log.info("User '%s' signed in", registered_user.username)
 
         start_page.verify_success_sign_up(username=registered_user.username)
