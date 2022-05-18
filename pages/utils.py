@@ -4,6 +4,12 @@ import random
 import string
 from time import sleep
 
+from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
+from selenium.webdriver.firefox.webdriver import WebDriver as MozilaDriver
+
+from constants.base import BaseConstants
+from constants.text_presets import EN_TEXT
+
 
 def random_num():
     """Generate random number"""
@@ -63,3 +69,22 @@ class User:
         self.username = f"{random_str()}{variety}"
         self.email = f"{self.username}@mail.com"
         self.password = f"PassWord{variety}"
+
+
+def create_driver(browser):
+    """Create driver driver according to provided browser"""
+    if browser == BaseConstants.CHROME:
+        driver = ChromeDriver(executable_path=BaseConstants.CHROME_DRIVER_PATH)
+    elif browser == BaseConstants.FIREFOX:
+        driver = MozilaDriver(executable_path=BaseConstants.FIREFOX_DRIVER_PATH)
+    else:
+        raise ValueError(f"Unknown browser name: '{browser}'")
+    driver.implicitly_wait(1)
+    driver.get(BaseConstants.BASE_URL)
+    return driver
+
+
+def random_text(length=15, preset=EN_TEXT):
+    """Create test using provided sample"""
+    words = preset.split(" ")
+    return ' '.join(random.choice(words) for _ in range(length))

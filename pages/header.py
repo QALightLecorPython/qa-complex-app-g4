@@ -22,3 +22,19 @@ class Header(BasePage):
         self.click(self.constants.CREATE_POST_BUTTON_XPATH)
         from pages.create_post_page import CreatePostPage
         return CreatePostPage(self.driver)
+
+    @log_wrapper
+    def navigate_to_post_by_title(self, title):
+        """Open to the post via search"""
+        self.click(self.constants.SEARCH_ICON_XPATH)
+        self.fill_field(self.constants.SEARCH_TEXT_FIELD_XPATH, title)
+        self.click(self.constants.SEARCH_RESULT_TITLE_XPATH.format(title=title))
+        from pages.post_page import PostPage
+        return PostPage(self.driver)
+
+    @log_wrapper
+    def navigate_to_profile(self, username):
+        """Open user profile"""
+        self.click(self.constants.MY_PROFILE_BUTTON_XPATH.format(username=username.lower()))
+        from pages.profile_page import ProfilePage
+        return ProfilePage(self.driver)
