@@ -4,7 +4,6 @@ from pages.utils import log_wrapper
 
 
 class Header(BasePage):
-
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = HeaderConstants()
@@ -14,6 +13,7 @@ class Header(BasePage):
         """Sign out from user profile"""
         self.click(self.constants.SIGN_OUT_BUTTON_XPATH)
         from pages.start_page import StartPage
+
         return StartPage(self.driver)
 
     @log_wrapper
@@ -21,6 +21,7 @@ class Header(BasePage):
         """Navigate to create post page"""
         self.click(self.constants.CREATE_POST_BUTTON_XPATH)
         from pages.create_post_page import CreatePostPage
+
         return CreatePostPage(self.driver)
 
     @log_wrapper
@@ -30,6 +31,7 @@ class Header(BasePage):
         self.fill_field(self.constants.SEARCH_TEXT_FIELD_XPATH, title)
         self.click(self.constants.SEARCH_RESULT_TITLE_XPATH.format(title=title))
         from pages.post_page import PostPage
+
         return PostPage(self.driver)
 
     @log_wrapper
@@ -37,4 +39,5 @@ class Header(BasePage):
         """Open user profile"""
         self.click(self.constants.MY_PROFILE_BUTTON_XPATH.format(username=username.lower()))
         from pages.profile_page import ProfilePage
+
         return ProfilePage(self.driver)

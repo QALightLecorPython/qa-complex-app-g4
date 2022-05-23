@@ -8,7 +8,6 @@ from pages.utils import create_driver, random_text
 
 @pytest.mark.parametrize("browser", BaseConstants.BROWSER_LIST_UNDER_TEST)
 class TestCreatePostPage:
-
     @pytest.fixture(scope="function")
     def start_page(self, browser):
         driver = create_driver(browser)

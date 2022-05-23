@@ -2,13 +2,15 @@ import pytest
 
 from constants.base import BaseConstants
 from constants.text_presets import UA_TEXT
+from pages.hello_user_page import HelloUserPage
+from pages.post_page import PostPage
+from pages.profile_page import ProfilePage
 from pages.start_page import StartPage
-from pages.utils import User, create_driver, random_text, random_str, random_num
+from pages.utils import User, create_driver, random_num, random_str, random_text
 
 
 @pytest.mark.parametrize("browser", BaseConstants.BROWSER_LIST_UNDER_TEST)
 class TestStartPage:
-
     @pytest.fixture(scope="function")
     def start_page(self, browser):
         driver = create_driver(browser=browser)
@@ -29,7 +31,12 @@ class TestStartPage:
         post_create_page.header.logout()
         return user
 
-    def test_follow_user(self, user_with_post, signed_in_user, random_user):
+    def test_follow_user(
+            self,
+            user_with_post: User,
+            signed_in_user: HelloUserPage,
+            random_user: User,
+    ):
         """
         - Pre-conditions:
             - Create user1
@@ -44,14 +51,14 @@ class TestStartPage:
             - Move to user2 profile
             - Verify user2 followings
         """
-        hello_user_page = signed_in_user
+        hello_user_page: HelloUserPage = signed_in_user
 
         # Search for user1's post as user2
         # Move to post page
-        post_page = hello_user_page.header.navigate_to_post_by_title(user_with_post.posts[0])
+        post_page: PostPage = hello_user_page.header.navigate_to_post_by_title(user_with_post.posts[0])
 
         # Move to user1 page
-        profile_page = post_page.navigate_to_user_profile(user_with_post.username)
+        profile_page: ProfilePage = post_page.navigate_to_user_profile(user_with_post.username)
 
         # Follow user1 as user2
         # Verify user1 followers
