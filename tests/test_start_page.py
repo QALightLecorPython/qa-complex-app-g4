@@ -1,7 +1,18 @@
-from pages.utils import User
+import pytest
+
+from constants.base import BaseConstants
+from pages.start_page import StartPage
+from pages.utils import User, create_driver
 
 
+@pytest.mark.parametrize("browser", BaseConstants.BROWSER_LIST_UNDER_TEST)
 class TestStartPage:
+
+    @pytest.fixture(scope="function")
+    def start_page(self, browser):
+        driver = create_driver(browser=browser)
+        yield StartPage(driver)
+        driver.close()
 
     def test_empty_fields_login(self, start_page):
         """
