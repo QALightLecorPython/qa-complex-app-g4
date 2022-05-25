@@ -7,7 +7,6 @@ from pages.utils import log_wrapper
 
 
 class ProfilePage(BasePage):
-
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = ProfilePageConstants()

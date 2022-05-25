@@ -5,7 +5,6 @@ from pages.utils import log_wrapper
 
 
 class HelloUserPage(BasePage):
-
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = HelloUserPageConstants()

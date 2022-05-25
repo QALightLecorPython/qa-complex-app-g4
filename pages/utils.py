@@ -3,7 +3,9 @@ import logging
 import random
 import string
 from time import sleep
+from typing import Optional
 
+from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.firefox.webdriver import WebDriver as MozilaDriver
 
@@ -18,7 +20,7 @@ def random_num():
 
 def random_str(length=5):
     """Generate random string"""
-    return ''.join(random.choice(string.ascii_letters) for _ in range(length))
+    return "".join(random.choice(string.ascii_letters) for _ in range(length))
 
 
 def wait_until_ok(timeout=5, period=0.25):
@@ -26,7 +28,6 @@ def wait_until_ok(timeout=5, period=0.25):
     logger = logging.getLogger("[WaitUntilOk]")
 
     def decorator(original_function):
-
         def wrapper(*args, **kwargs):
             end_time = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
             while True:
@@ -56,8 +57,12 @@ def log_wrapper(func):
 
 
 class User:
-
-    def __init__(self, username="", email="", password=""):
+    def __init__(
+            self,
+            username: Optional[str] = "",
+            email: Optional[str] = "",
+            password: Optional[str] = "",
+    ):
         self.username = username
         self.email = email
         self.password = password
@@ -71,12 +76,16 @@ class User:
         self.password = f"PassWord{variety}"
 
 
-def create_driver(browser):
+def create_driver(browser: str):
     """Create driver driver according to provided browser"""
     if browser == BaseConstants.CHROME:
-        driver = ChromeDriver(executable_path=BaseConstants.CHROME_DRIVER_PATH)
+        options = webdriver.ChromeOptions()
+        options.add_argument("headless")
+        driver = ChromeDriver(options=options)
     elif browser == BaseConstants.FIREFOX:
-        driver = MozilaDriver(executable_path=BaseConstants.FIREFOX_DRIVER_PATH)
+        options = webdriver.firefox.webdriver.Options()
+        options.add_argument("--headless")
+        driver = MozilaDriver(options=options)
     else:
         raise ValueError(f"Unknown browser name: '{browser}'")
     driver.implicitly_wait(1)
@@ -85,6 +94,6 @@ def create_driver(browser):
 
 
 def random_text(length=15, preset=EN_TEXT):
-    """Create test using provided sample"""
+    """Create tests using provided sample"""
     words = preset.split(" ")
-    return ' '.join(random.choice(words) for _ in range(length))
+    return " ".join(random.choice(words) for _ in range(length))
