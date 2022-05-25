@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from constants.base import BaseConstants
@@ -14,7 +15,9 @@ class TestCreatePostPage:
         yield StartPage(driver)
         driver.close()
 
-    def test_create_post(self, signed_in_user):
+    @allure.feature("Create Post Page")
+    @allure.story("Test create post as signed up user")
+    def test_create_post(self, start_page, signed_in_user):
         """
         - Pre-requirements:
             - SignIn/Up as a user

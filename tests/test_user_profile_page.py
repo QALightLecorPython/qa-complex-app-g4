@@ -1,3 +1,6 @@
+import random
+
+import allure
 import pytest
 
 from constants.base import BaseConstants
@@ -10,7 +13,7 @@ from pages.utils import User, create_driver, random_num, random_str, random_text
 
 
 @pytest.mark.parametrize("browser", BaseConstants.BROWSER_LIST_UNDER_TEST)
-class TestStartPage:
+class TestUserProfilePage:
     @pytest.fixture(scope="function")
     def start_page(self, browser):
         driver = create_driver(browser=browser)
@@ -31,8 +34,11 @@ class TestStartPage:
         post_create_page.header.logout()
         return user
 
+    @allure.feature("User Profile Page")
+    @allure.story("Test follow user")
     def test_follow_user(
             self,
+            start_page: StartPage,
             user_with_post: User,
             signed_in_user: HelloUserPage,
             random_user: User,
@@ -55,17 +61,53 @@ class TestStartPage:
 
         # Search for user1's post as user2
         # Move to post page
-        post_page: PostPage = hello_user_page.header.navigate_to_post_by_title(user_with_post.posts[0])
+        with allure.step(f"Navigate to post by title '{user_with_post.posts[0]}'"):
+            post_page: PostPage = hello_user_page.header.navigate_to_post_by_title(user_with_post.posts[0])
 
         # Move to user1 page
-        profile_page: ProfilePage = post_page.navigate_to_user_profile(user_with_post.username)
+        with allure.step(f"Navigate to user profile ({user_with_post.username})"):
+            profile_page: ProfilePage = post_page.navigate_to_user_profile(user_with_post.username)
 
         # Follow user1 as user2
         # Verify user1 followers
-        profile_page.follow_user_and_verify(user_with_post.username, random_user.username)
+        with allure.step("Follow user and verify"):
+            profile_page.follow_user_and_verify(user_with_post.username, random_user.username)
 
         # Move to user2 profile
-        profile_page.header.navigate_to_profile(random_user.username)
+        with allure.step(f"Navigate to user profile ({random_user.username})"):
+            profile_page.header.navigate_to_profile(random_user.username)
 
         # Verify user2 followings
-        profile_page.verify_followings(random_user.username, user_with_post.username)
+        with allure.step("Verify following tab"):
+            profile_page.verify_followings(random_user.username, user_with_post.username)
+
+    def test_chat(self, start_page: StartPage, signed_in_user: HelloUserPage):
+        """
+        - Pre-conditions:
+            - Sign up as new user
+        - Steps:
+            - Open chat
+            - Put some text in the chat
+            - Verify that message appears
+            - Put one more message
+            - Verify that all messages present in chat
+        """
+        hello_user_page: HelloUserPage = signed_in_user
+
+        # Open chat
+        hello_user_page.header.open_chat()
+
+        # Put some text in the chat
+        expected_messages = [random_text(3)]
+        hello_user_page.chat.send_message(expected_messages[0])
+
+        # Verify that message appears
+        hello_user_page.chat.verify_messages(expected_messages)
+
+        # Put one more message
+        for _ in range(25):
+            expected_messages.append(random_text(random.randint(2, 7)))
+            hello_user_page.chat.send_message(expected_messages[-1])
+
+        # Verify that all messages present in chat
+        hello_user_page.chat.verify_messages(expected_messages)
