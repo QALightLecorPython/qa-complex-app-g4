@@ -4,11 +4,10 @@ from selenium.webdriver import Keys
 
 from constants.chat import ChatConstants
 from pages.base_page import BasePage
-from pages.utils import wait_until_ok, log_wrapper
+from pages.utils import log_wrapper, wait_until_ok
 
 
 class Chat(BasePage):
-
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = ChatConstants()
