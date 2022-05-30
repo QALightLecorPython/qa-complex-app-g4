@@ -41,3 +41,8 @@ class Header(BasePage):
         from pages.profile_page import ProfilePage
 
         return ProfilePage(self.driver)
+
+    @log_wrapper
+    def open_chat(self):
+        """Open chat"""
+        self.click(self.constants.CHAT_BUTTON_XPATH)

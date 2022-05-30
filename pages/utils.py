@@ -6,6 +6,7 @@ from time import sleep
 from typing import Optional
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.firefox.webdriver import WebDriver as MozilaDriver
 
@@ -56,6 +57,20 @@ def log_wrapper(func):
     return wrapper
 
 
+def time_out_wrapper(func):
+    """Handle TimeoutException"""
+
+    def wrapper(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+        except TimeoutException:
+            element_xpath = kwargs["xpath"] if kwargs.get("xpath") else args[1]
+            raise TimeoutException(f"Cannot find element '{element_xpath}'")
+        return result
+
+    return wrapper
+
+
 class User:
     def __init__(
             self,
@@ -80,7 +95,7 @@ def create_driver(browser: str):
     """Create driver driver according to provided browser"""
     if browser == BaseConstants.CHROME:
         options = webdriver.ChromeOptions()
-        options.add_argument("headless")
+        # options.add_argument("headless")
         driver = ChromeDriver(options=options)
     elif browser == BaseConstants.FIREFOX:
         options = webdriver.firefox.webdriver.Options()
@@ -96,4 +111,4 @@ def create_driver(browser: str):
 def random_text(length=15, preset=EN_TEXT):
     """Create tests using provided sample"""
     words = preset.split(" ")
-    return " ".join(random.choice(words) for _ in range(length))
+    return " ".join(random.choice(words).replace("\n", "") for _ in range(length))

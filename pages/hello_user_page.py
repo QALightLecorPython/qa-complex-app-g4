@@ -1,5 +1,6 @@
 from constants.hello_user_page import HelloUserPageConstants
 from pages.base_page import BasePage
+from pages.chat import Chat
 from pages.header import Header
 from pages.utils import log_wrapper
 
@@ -9,6 +10,7 @@ class HelloUserPage(BasePage):
         super().__init__(driver)
         self.constants = HelloUserPageConstants()
         self.header = Header(driver)
+        self.chat = Chat(driver)
 
     @log_wrapper
     def verify_success_sign_up(self, username):

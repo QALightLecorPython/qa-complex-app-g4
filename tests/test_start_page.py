@@ -1,4 +1,6 @@
+import allure
 import pytest
+from allure_commons.types import Severity
 
 from constants.base import BaseConstants
 from pages.hello_user_page import HelloUserPage
@@ -14,6 +16,10 @@ class TestStartPage:
         yield StartPage(driver)
         driver.close()
 
+    @allure.epic("Start Page")
+    @allure.feature("Sign In")
+    @allure.story("Test empty fields Sign In")
+    @allure.severity(Severity.BLOCKER)
     def test_empty_fields_login(self, start_page: StartPage):
         """
         - Pre-conditions:
@@ -33,6 +39,10 @@ class TestStartPage:
         # Verify error message
         start_page.verify_sign_in_error()
 
+    @allure.epic("Start Page")
+    @allure.feature("Sign In")
+    @allure.story("Test invalid Sign In")
+    @allure.severity(Severity.CRITICAL)
     def test_invalid_login(self, start_page: StartPage, random_user: User):
         """
         - Pre-conditions:
@@ -52,6 +62,10 @@ class TestStartPage:
         # Verify error message
         start_page.verify_sign_in_error()
 
+    @allure.epic("Start Page")
+    @allure.feature("Sign Up")
+    @allure.story("Test Sign Up")
+    @allure.severity(Severity.CRITICAL)
     def test_register(self, start_page: StartPage, random_user: User):
         """
         - Pre-requirements:
@@ -68,6 +82,10 @@ class TestStartPage:
         # Verify registration is successful
         hello_user_page.verify_success_sign_up(username=random_user.username)
 
+    @allure.epic("Start Page")
+    @allure.feature("Sign Up")
+    @allure.story("Test Sign In as signed up user")
+    @allure.severity(Severity.NORMAL)
     def test_sign_in(self, signed_out_user: StartPage, random_user: User):
         """
         - Pre-conditions:

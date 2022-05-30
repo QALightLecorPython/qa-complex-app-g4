@@ -3,4 +3,4 @@ class BaseConstants:
     BASE_URL = "https://qa-complex-app-for-testing.herokuapp.com/"
     CHROME = "chrome"
     FIREFOX = "firefox"
-    BROWSER_LIST_UNDER_TEST = [CHROME, FIREFOX]
+    BROWSER_LIST_UNDER_TEST = [CHROME]
