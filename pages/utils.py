@@ -1,3 +1,4 @@
+"""Useful functions and objects"""
 import datetime
 import logging
 import random
@@ -11,7 +12,8 @@ from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.firefox.webdriver import WebDriver as MozilaDriver
 
 from constants.base import BaseConstants
-from constants.text_presets import EN_TEXT
+from constants.create_post_page import CreatePostPageConstants
+from constants.text_presets import EN_TEXT, UA_TEXT
 
 
 def random_num():
@@ -34,9 +36,10 @@ def wait_until_ok(timeout=5, period=0.25):
             while True:
                 try:
                     return original_function(*args, **kwargs)
+                # pylint: disable=broad-except
                 except Exception as err:
                     if datetime.datetime.now() > end_time:
-                        logger.warning(f"Catch: {err}")
+                        logger.warning("Catch: %s", err)
                         raise err
                     sleep(period)
 
@@ -51,7 +54,7 @@ def log_wrapper(func):
     def wrapper(*args, **kwargs):
         log = logging.getLogger("[LogDecorator]")
         result = func(*args, **kwargs)
-        log.info(f"{func.__doc__}")
+        log.info(func.__doc__)
         return result
 
     return wrapper
@@ -65,6 +68,7 @@ def time_out_wrapper(func):
             result = func(*args, **kwargs)
         except TimeoutException:
             element_xpath = kwargs["xpath"] if kwargs.get("xpath") else args[1]
+            # pylint: disable=raise-missing-from
             raise TimeoutException(f"Cannot find element '{element_xpath}'")
         return result
 
@@ -72,6 +76,8 @@ def time_out_wrapper(func):
 
 
 class User:
+    """Describes user"""
+
     def __init__(
             self,
             username: Optional[str] = "",
@@ -89,6 +95,20 @@ class User:
         self.username = f"{random_str()}{variety}"
         self.email = f"{self.username}@mail.com"
         self.password = f"PassWord{variety}"
+
+
+class Post:
+    """Describes post"""
+
+    def __init__(self, title: str = "", text: str = "", share_option: str = CreatePostPageConstants.SHARE_OPTION_ALL_USERS):
+        self.title = title
+        self.text = text
+        self.share_option = share_option
+
+    def fill_properties(self):
+        """Generate random post with default values"""
+        self.title = f"{random_str()}-{random_num()}"
+        self.text = random_text(30, UA_TEXT)
 
 
 def create_driver(browser: str):

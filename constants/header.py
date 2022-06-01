@@ -1,4 +1,10 @@
+"""Header Element Constants"""
+
+
+# pylint: disable=too-few-public-methods
 class HeaderConstants:
+    """Header Element Constants"""
+
     CREATE_POST_BUTTON_XPATH = ".//a[@href='/create-post']"
     SIGN_OUT_BUTTON_XPATH = ".//button[text()='Sign Out']"
     SEARCH_ICON_XPATH = ".//a[@href='#']"

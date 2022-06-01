@@ -1,9 +1,13 @@
+"""Header ElementObject"""
 from constants.header import HeaderConstants
 from pages.base_page import BasePage
 from pages.utils import log_wrapper
 
 
+# pylint: disable=import-outside-toplevel
 class Header(BasePage):
+    """Header ElementObject"""
+
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = HeaderConstants()
@@ -20,9 +24,9 @@ class Header(BasePage):
     def navigate_to_create_post(self):
         """Navigate to create post page"""
         self.click(self.constants.CREATE_POST_BUTTON_XPATH)
-        from pages.create_post_page import CreatePostPage
+        from pages.create_post_page import UpsertPostPage
 
-        return CreatePostPage(self.driver)
+        return UpsertPostPage(self.driver)
 
     @log_wrapper
     def navigate_to_post_by_title(self, title):

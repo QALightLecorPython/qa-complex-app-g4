@@ -1,3 +1,4 @@
+"""Hello User PageObject"""
 from constants.hello_user_page import HelloUserPageConstants
 from pages.base_page import BasePage
 from pages.chat import Chat
@@ -6,6 +7,8 @@ from pages.utils import log_wrapper
 
 
 class HelloUserPage(BasePage):
+    """Hello User PageObject"""
+
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = HelloUserPageConstants()
