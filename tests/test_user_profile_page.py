@@ -1,38 +1,28 @@
+"""Tests related o profile page"""
 import random
 
 import allure
 import pytest
 
 from constants.base import BaseConstants
-from constants.text_presets import UA_TEXT
 from pages.hello_user_page import HelloUserPage
 from pages.post_page import PostPage
 from pages.profile_page import ProfilePage
 from pages.start_page import StartPage
-from pages.utils import User, create_driver, random_num, random_str, random_text
+from pages.utils import User, create_driver, random_text
 
 
 @pytest.mark.parametrize("browser", BaseConstants.BROWSER_LIST_UNDER_TEST)
 class TestUserProfilePage:
+    """Tests related o profile page"""
+
+    # pylint: disable=no-self-use,unused-argument
     @pytest.fixture(scope="function")
     def start_page(self, browser):
+        """Start page object fixture"""
         driver = create_driver(browser=browser)
         yield StartPage(driver)
         driver.close()
-
-    @pytest.fixture(scope="function")
-    def user_with_post(self, start_page):
-        user = User()
-        user.fill_properties()
-        # Sign Up
-        hello_user_page = start_page.sign_up(user)
-        # Create post
-        post_create_page = hello_user_page.header.navigate_to_create_post()
-        title = f"{random_str()}-{random_num()}"
-        post_create_page.create_post(title=title, content=random_text(30, UA_TEXT))
-        user.posts.append(title)
-        post_create_page.header.logout()
-        return user
 
     @allure.feature("User Profile Page")
     @allure.story("Test follow user")
@@ -111,3 +101,21 @@ class TestUserProfilePage:
 
         # Verify that all messages present in chat
         hello_user_page.chat.verify_messages(expected_messages)
+
+    def test_view_user_posts(self, random_user, create_few_posts, signed_in_user):
+        """
+        - Pre-conditions:
+            - Sign up as a user
+            - Create few posts (with different share options)
+        - Steps:
+            - Navigate to profile page
+            - Verify posts count
+            - Verify posts content
+        """
+        hello_user_page: HelloUserPage = signed_in_user
+
+        # Navigate to profile page
+        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(random_user.username)
+
+        # Verify posts count
+        assert profile_page.wait_until_displayed(xpath=profile_page.constants.POSTS_TAB_XPATH.format(username=random_user.username.lower())).text == "Posts: 2"

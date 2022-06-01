@@ -1,4 +1,10 @@
+"""Start Page Constants"""
+
+
+# pylint: disable=too-few-public-methods
 class StartPageConstants:
+    """Start Page Constants"""
+
     # Sign In
     SIGN_IN_USERNAME_XPATH = ".//input[@placeholder='Username']"
     SIGN_IN_PASSWORD_XPATH = ".//input[@placeholder='Password']"
@@ -11,3 +17,4 @@ class StartPageConstants:
     SIGN_UP_EMAIL_XPATH = ".//input[@id='email-register']"
     SIGN_UP_PASSWORD_XPATH = ".//input[@id='password-register']"
     SIGN_UP_BUTTON_XPATH = ".//button[@type='submit']"
+    SIGN_UP_FIELD_VALIDATION_MESSAGE = ".//div[@class='form-group']//div"

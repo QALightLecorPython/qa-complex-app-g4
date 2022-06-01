@@ -1,3 +1,5 @@
+"""Provides text samples for messages generation"""
+
 EN_TEXT = """The Pyramid of Sahure is a pyramid complex built in the late 26th to 25th century BC for the Egyptian pharaoh Sahure of the Fifth Dynasty.
 It introduced a period of pyramid building by Sahure's successors in Abusir,
 on a location earlier used by Userkaf for his sun temple.
@@ -31,7 +33,7 @@ The valley temple is situated on Abusir lake and is unusual for having two entra
 and a secondary one on its south. It remains unclear why a second entry point was built, though it may have been 
 connected to a pyramid town to its south."""
 
-UA_TEXT = """Організація Північноатлантичного договору, також Північноатлантичний альянс або НАТО 
+UA_TEXT = """Організація Північноатлантичного договору, також Північноатлантичний альянс або НАТО
 (англ. North Atlantic Treaty Organization — NATO, фр. — міжнародна міжурядова організація, 
 військово-політичний союз 30 держав Північної Америки і Європи, які прагнуть досягти мети 
 Північноатлантичного договору, підписаного у Вашингтоні 4 квітня 1949.

@@ -1,3 +1,5 @@
+"""Chat ElementObject"""
+
 from typing import List
 
 from selenium.webdriver import Keys
@@ -8,6 +10,8 @@ from pages.utils import log_wrapper, wait_until_ok
 
 
 class Chat(BasePage):
+    """Chat ElementObject"""
+
     def __init__(self, driver):
         super().__init__(driver)
         self.constants = ChatConstants()

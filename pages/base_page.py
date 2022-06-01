@@ -1,8 +1,10 @@
+"""Base PageObject"""
 import random
 import string
 from typing import List
 
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
@@ -12,8 +14,10 @@ from pages.utils import time_out_wrapper
 
 
 class BasePage:
+    """Base PageObject"""
+
     def __init__(self, driver):
-        self.driver = driver
+        self.driver: WebDriver = driver
         self.waiter = WebDriverWait(driver=driver, timeout=5)
 
     @staticmethod
