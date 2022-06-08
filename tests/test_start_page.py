@@ -82,7 +82,9 @@ class TestStartPage:
         """
         # Fill email, login and password fields
         # Click on Sign Up button
-        hello_user_page: HelloUserPage = start_page.sign_up_and_verify(random_user)
+        hello_user_page: HelloUserPage = start_page.sign_up_and_verify(
+            random_user
+        )
 
         # Verify registration is successful
         hello_user_page.verify_success_sign_up(username=random_user.username)
@@ -108,9 +110,18 @@ class TestStartPage:
     @pytest.mark.parametrize(
         "user, text",
         [
-            (User(username="User123", email="user123@mail.com"), "Password must be at least 12 characters."),
-            (User(username="User123", password="wncgficf453nc7"), "You must provide a valid email address."),
-            (User(email="user123@mail.com", password="nc273rctw499m"), "Username must be at least 3 characters."),
+            (
+                    User(username="User123", email="user123@mail.com"),
+                    "Password must be at least 12 characters.",
+            ),
+            (
+                    User(username="User123", password="wncgficf453nc7"),
+                    "You must provide a valid email address.",
+            ),
+            (
+                    User(email="user123@mail.com", password="nc273rctw499m"),
+                    "Username must be at least 3 characters.",
+            ),
         ],
     )
     def test_sign_up_fields_validation(self, start_page, user, text):

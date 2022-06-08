@@ -51,17 +51,29 @@ class TestUserProfilePage:
 
         # Search for user1's post as user2
         # Move to post page
-        with allure.step(f"Navigate to post by title '{user_with_post.posts[0]}'"):
-            post_page: PostPage = hello_user_page.header.navigate_to_post_by_title(user_with_post.posts[0])
+        with allure.step(
+                f"Navigate to post by title '{user_with_post.posts[0]}'"
+        ):
+            post_page: PostPage = (
+                hello_user_page.header.navigate_to_post_by_title(
+                    user_with_post.posts[0]
+                )
+            )
 
         # Move to user1 page
-        with allure.step(f"Navigate to user profile ({user_with_post.username})"):
-            profile_page: ProfilePage = post_page.navigate_to_user_profile(user_with_post.username)
+        with allure.step(
+                f"Navigate to user profile ({user_with_post.username})"
+        ):
+            profile_page: ProfilePage = post_page.navigate_to_user_profile(
+                user_with_post.username
+            )
 
         # Follow user1 as user2
         # Verify user1 followers
         with allure.step("Follow user and verify"):
-            profile_page.follow_user_and_verify(user_with_post.username, random_user.username)
+            profile_page.follow_user_and_verify(
+                user_with_post.username, random_user.username
+            )
 
         # Move to user2 profile
         with allure.step(f"Navigate to user profile ({random_user.username})"):
@@ -69,7 +81,9 @@ class TestUserProfilePage:
 
         # Verify user2 followings
         with allure.step("Verify following tab"):
-            profile_page.verify_followings(random_user.username, user_with_post.username)
+            profile_page.verify_followings(
+                random_user.username, user_with_post.username
+            )
 
     def test_chat(self, start_page: StartPage, signed_in_user: HelloUserPage):
         """
@@ -102,7 +116,9 @@ class TestUserProfilePage:
         # Verify that all messages present in chat
         hello_user_page.chat.verify_messages(expected_messages)
 
-    def test_view_user_posts(self, random_user, create_few_posts, signed_in_user):
+    def test_view_user_posts(
+            self, random_user, create_few_posts, signed_in_user
+    ):
         """
         - Pre-conditions:
             - Sign up as a user
@@ -115,7 +131,16 @@ class TestUserProfilePage:
         hello_user_page: HelloUserPage = signed_in_user
 
         # Navigate to profile page
-        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(random_user.username)
+        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(
+            random_user.username
+        )
 
         # Verify posts count
-        assert profile_page.wait_until_displayed(xpath=profile_page.constants.POSTS_TAB_XPATH.format(username=random_user.username.lower())).text == "Posts: 2"
+        assert (
+                profile_page.wait_until_displayed(
+                    xpath=profile_page.constants.POSTS_TAB_XPATH.format(
+                        username=random_user.username.lower()
+                    )
+                ).text
+                == "Posts: 2"
+        )

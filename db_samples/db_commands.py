@@ -7,8 +7,8 @@ DB_NAME = "storage"
 TABLE_NAME = "Persons"
 FIELDS_DESC = "(PersonID int, FirstName varchar(255), City varchar(255))"
 # Persons
-PERSON_ARTHUR = "(1, \"Arthur\", \"Delaver\")"
-PERSON_JAMES = "(2, \"James\", \"Amsterdam\")"
+PERSON_ARTHUR = '(1, "Arthur", "Delaver")'
+PERSON_JAMES = '(2, "James", "Amsterdam")'
 
 # SQL Commands
 CREATE_DB_IF_NOT_EXISTS = "CREATE DATABASE IF NOT EXISTS {db}"
@@ -20,10 +20,7 @@ DROP_DB = "DROP DATABASE {db}"
 
 # Connect to MYSQL server
 mydb = mysql.connector.connect(
-    host="localhost",
-    port="3306",
-    user="user",
-    password="1234"
+    host="localhost", port="3306", user="user", password="1234"
 )
 
 # Get cursor
@@ -41,11 +38,21 @@ print("======================DATABASES===========================")
 print(x)
 
 # Create some table
-mycursor.execute(CREATE_TABLE.format(db=DB_NAME, name=TABLE_NAME, fields=FIELDS_DESC))
+mycursor.execute(
+    CREATE_TABLE.format(db=DB_NAME, name=TABLE_NAME, fields=FIELDS_DESC)
+)
 
 # Insert data into table
-mycursor.execute(INSERT_INTO.format(db=DB_NAME, table=TABLE_NAME, fields="", values=PERSON_ARTHUR))
-mycursor.execute(INSERT_INTO.format(db=DB_NAME, table=TABLE_NAME, fields="", values=PERSON_JAMES))
+mycursor.execute(
+    INSERT_INTO.format(
+        db=DB_NAME, table=TABLE_NAME, fields="", values=PERSON_ARTHUR
+    )
+)
+mycursor.execute(
+    INSERT_INTO.format(
+        db=DB_NAME, table=TABLE_NAME, fields="", values=PERSON_JAMES
+    )
+)
 
 # Select data
 print("======================SELECT * FROM ===========================")
@@ -56,7 +63,9 @@ for x in mycursor:
 
 # Select data
 print("======================SELECT FirstName FROM ===========================")
-mycursor.execute(SELECT.format(fields="FirstName", db=DB_NAME, table=TABLE_NAME))
+mycursor.execute(
+    SELECT.format(fields="FirstName", db=DB_NAME, table=TABLE_NAME)
+)
 # Print the result
 for x in mycursor:
     print(x)

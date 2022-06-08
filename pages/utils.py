@@ -32,7 +32,9 @@ def wait_until_ok(timeout=5, period=0.25):
 
     def decorator(original_function):
         def wrapper(*args, **kwargs):
-            end_time = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
+            end_time = datetime.datetime.now() + datetime.timedelta(
+                seconds=timeout
+            )
             while True:
                 try:
                     return original_function(*args, **kwargs)
@@ -100,7 +102,12 @@ class User:
 class Post:
     """Describes post"""
 
-    def __init__(self, title: str = "", text: str = "", share_option: str = CreatePostPageConstants.SHARE_OPTION_ALL_USERS):
+    def __init__(
+            self,
+            title: str = "",
+            text: str = "",
+            share_option: str = CreatePostPageConstants.SHARE_OPTION_ALL_USERS,
+    ):
         self.title = title
         self.text = text
         self.share_option = share_option
@@ -131,4 +138,6 @@ def create_driver(browser: str):
 def random_text(length=15, preset=EN_TEXT):
     """Create tests using provided sample"""
     words = preset.split(" ")
-    return " ".join(random.choice(words).replace("\n", "") for _ in range(length))
+    return " ".join(
+        random.choice(words).replace("\n", "") for _ in range(length)
+    )

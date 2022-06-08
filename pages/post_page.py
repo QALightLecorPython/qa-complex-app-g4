@@ -18,7 +18,11 @@ class PostPage(BasePage):
     @log_wrapper
     def navigate_to_user_profile(self, username):
         """Navigate to user profile page"""
-        self.click(self.constants.LINK_TO_USER_PROFILE_XPATH.format(username=username.lower()))
+        self.click(
+            self.constants.LINK_TO_USER_PROFILE_XPATH.format(
+                username=username.lower()
+            )
+        )
         from pages.profile_page import ProfilePage
 
         return ProfilePage(self.driver)
@@ -34,10 +38,18 @@ class PostPage(BasePage):
     @log_wrapper
     def verify_post_data(self, title: str, content: str):
         """Verify post's data"""
-        actual_title = self.wait_until_displayed(self.constants.TITLE_TEXT_XPATH)
-        assert actual_title.text == title, f"Actual: {actual_title}, Expected: {title}"
-        actual_content = self.wait_until_displayed(self.constants.CONTENT_TEXT_XPATH)
-        assert actual_content.text == content, f"Actual: {actual_content}, Expected: {content}"
+        actual_title = self.wait_until_displayed(
+            self.constants.TITLE_TEXT_XPATH
+        )
+        assert (
+                actual_title.text == title
+        ), f"Actual: {actual_title}, Expected: {title}"
+        actual_content = self.wait_until_displayed(
+            self.constants.CONTENT_TEXT_XPATH
+        )
+        assert (
+                actual_content.text == content
+        ), f"Actual: {actual_content}, Expected: {content}"
 
     @log_wrapper
     def delete_post(self):
