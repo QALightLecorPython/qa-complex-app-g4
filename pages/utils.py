@@ -115,7 +115,7 @@ def create_driver(browser: str):
     """Create driver driver according to provided browser"""
     if browser == BaseConstants.CHROME:
         options = webdriver.ChromeOptions()
-        # options.add_argument("headless")
+        options.add_argument("headless")
         driver = ChromeDriver(options=options)
     elif browser == BaseConstants.FIREFOX:
         options = webdriver.firefox.webdriver.Options()
