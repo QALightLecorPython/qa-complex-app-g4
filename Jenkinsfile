@@ -17,8 +17,8 @@ pipeline {
         script {
           currentBuild.displayName = "#${env.BUILD_NUMBER} (${env.GIT_COMMIT.take(8)}) ${env.GIT_BRANCH}"
           sh '''
-            python3 -m pip install -r requirements.txt
-            python3 -m pytest tests/ -n 7
+            python3.8 -m pip install -r requirements.txt
+            python3.8 -m pytest tests/ -n 7
           '''
         } // script
       } // steps
