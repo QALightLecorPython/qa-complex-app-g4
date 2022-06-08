@@ -17,10 +17,10 @@ pipeline {
         script {
           currentBuild.displayName = "#${env.BUILD_NUMBER} (${env.GIT_COMMIT.take(8)}) ${env.GIT_BRANCH}"
           sh '''
-            python3 --version
-            which python3
-            python3.8 -m pip install -r requirements.txt
-            python3.8 -m pytest tests/ -n 7
+            /usr/local/Cellar/python@3.8/3.8.13_1/bin/python3.8 --version
+            which /usr/local/Cellar/python@3.8/3.8.13_1/bin/python3.8
+            /usr/local/Cellar/python@3.8/3.8.13_1/bin/python3.8 -m pip install -r requirements.txt
+            /usr/local/Cellar/python@3.8/3.8.13_1/bin/python3.8 -m pytest tests/ -n 7
           '''
         } // script
       } // steps
