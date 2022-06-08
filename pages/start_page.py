@@ -54,14 +54,11 @@ class StartPage(BasePage):
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
         assert not self.is_element_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
+    @wait_until_ok(timeout=5)
     @log_wrapper
     def verify_sign_up_validation_error(self, text):
         """Verify validation error for any sign up field"""
         validation_errors = self.driver.find_elements(by=By.XPATH, value=self.constants.SIGN_UP_FIELD_VALIDATION_MESSAGE)
-        # visible_errors = []
-        # for element in validation_errors:
-        #     if element.is_displayed():
-        #         visible_errors.append(element)
         visible_errors = [element for element in validation_errors if element.is_displayed()]
         assert len(visible_errors) == 1, f"Actual: {len(visible_errors)}"
         assert visible_errors[0].text == text, f"Actual: {visible_errors[0].text}"
