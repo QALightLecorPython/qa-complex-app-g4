@@ -36,7 +36,9 @@ class TestCreatePostPage:
         """
         # Create post
         post_create_page = signed_in_user.header.navigate_to_create_post()
-        post_create_page.create_post(title=random_text(3), content=random_text(30, UA_TEXT))
+        post_create_page.create_post(
+            title=random_text(3), content=random_text(30, UA_TEXT)
+        )
 
         # Verify message
         post_create_page.verify_message_text()
@@ -61,10 +63,14 @@ class TestCreatePostPage:
         hello_user_page: HelloUserPage = start_page.sign_in(user_with_post)
 
         # Navigate to profile page
-        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(user_with_post.username)
+        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(
+            user_with_post.username
+        )
 
         # Find post (click on it)
-        post_page: PostPage = profile_page.navigate_to_the_post(user_with_post.posts[0])
+        post_page: PostPage = profile_page.navigate_to_the_post(
+            user_with_post.posts[0]
+        )
 
         # Click edit
         upsert_post_page: UpsertPostPage = post_page.edit_post()
@@ -76,7 +82,9 @@ class TestCreatePostPage:
         upsert_post_page.verify_update_message_text()
 
         # Navigate to profile page
-        profile_page: ProfilePage = upsert_post_page.header.navigate_to_profile(user_with_post.username)
+        profile_page: ProfilePage = upsert_post_page.header.navigate_to_profile(
+            user_with_post.username
+        )
 
         # Find post (click on it)
         post_page: PostPage = profile_page.navigate_to_the_post(title)
@@ -102,10 +110,14 @@ class TestCreatePostPage:
         hello_user_page: HelloUserPage = start_page.sign_in(user_with_post)
 
         # Navigate to profile page
-        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(user_with_post.username)
+        profile_page: ProfilePage = hello_user_page.header.navigate_to_profile(
+            user_with_post.username
+        )
 
         # Find post (click on it)
-        post_page: PostPage = profile_page.navigate_to_the_post(user_with_post.posts[0])
+        post_page: PostPage = profile_page.navigate_to_the_post(
+            user_with_post.posts[0]
+        )
 
         # # Delete post
         profile_page: ProfilePage = post_page.delete_post()

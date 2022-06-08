@@ -41,7 +41,11 @@ class Header(BasePage):
     @log_wrapper
     def navigate_to_profile(self, username):
         """Open user profile"""
-        self.click(self.constants.MY_PROFILE_BUTTON_XPATH.format(username=username.lower()))
+        self.click(
+            self.constants.MY_PROFILE_BUTTON_XPATH.format(
+                username=username.lower()
+            )
+        )
         from pages.profile_page import ProfilePage
 
         return ProfilePage(self.driver)

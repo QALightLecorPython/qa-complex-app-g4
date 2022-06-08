@@ -16,7 +16,7 @@ def wait_for_user(user_name: str) -> User:
     return user_api.get_user_by_name(username=user_name)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create API
     api_client = ApiClient(configuration=Configuration())
     user_api = UserApi(api_client=ApiClient())
@@ -25,13 +25,15 @@ if __name__ == '__main__':
     # Create user
     # - Prepare data using model
     username = f"Lector{random.randint(10000000, 99999999)}"
-    user = User(id=random.randint(10000000, 99999999),
-                username=username,
-                first_name="John",
-                last_name="Doe",
-                email="jdoe@mail.com",
-                password="123456",
-                phone="+2345655")
+    user = User(
+        id=random.randint(10000000, 99999999),
+        username=username,
+        first_name="John",
+        last_name="Doe",
+        email="jdoe@mail.com",
+        password="123456",
+        phone="+2345655",
+    )
     # - Send request
     response: Tuple = user_api.create_user_with_http_info(user)
     # - Check the response

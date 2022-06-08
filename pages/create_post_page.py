@@ -26,7 +26,11 @@ class UpsertPostPage(BasePage):
         self.fill_field(self.constants.TITLE_FIELD_XPATH, post.title)
         self.fill_field(self.constants.CONTENT_FIELD_XPATH, post.text)
         self.click(self.constants.SHARE_OPTION_DROP_DOWN_XPATH)
-        self.click(self.constants.SHARE_OPTION_MESSAGE_XPATH.format(option=post.share_option))
+        self.click(
+            self.constants.SHARE_OPTION_MESSAGE_XPATH.format(
+                option=post.share_option
+            )
+        )
         self.click(self.constants.SAVE_POST_BUTTON_XPATH)
 
     @log_wrapper
@@ -39,11 +43,15 @@ class UpsertPostPage(BasePage):
     @log_wrapper
     def verify_message_text(self) -> None:
         """Verify success post creation message"""
-        element = self.wait_until_displayed(self.constants.SUCCESS_MESSAGE_XPATH)
+        element = self.wait_until_displayed(
+            self.constants.SUCCESS_MESSAGE_XPATH
+        )
         assert element.text == self.constants.SUCCESS_MESSAGE_TEXT
 
     @log_wrapper
     def verify_update_message_text(self) -> None:
         """Verify success post update message"""
-        element = self.wait_until_displayed(self.constants.SUCCESS_MESSAGE_XPATH)
+        element = self.wait_until_displayed(
+            self.constants.SUCCESS_MESSAGE_XPATH
+        )
         assert element.text == self.constants.SUCCESS_UPDATE_MESSAGE_TEXT

@@ -3,7 +3,7 @@ name: Lint
 on: [ push ]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,9 +21,7 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           python -m pylint tests pages
-
       - name: Run Black
         uses: wearerequired/lint-action@v1
         with:
           black: true
-

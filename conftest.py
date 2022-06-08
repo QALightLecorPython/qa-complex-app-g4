@@ -13,7 +13,9 @@ from pages.utils import Post, User, random_num, random_str, random_text
 
 # pylint: disable=redefined-outer-name, missing-function-docstring, unused-argument, import-outside-toplevel
 def pytest_sessionstart(session):
-    os.environ["PATH"] = os.environ["PATH"] + f":{os.path.abspath(BaseConstants.DRIVERS_PATH)}"
+    os.environ["PATH"] = (
+            os.environ["PATH"] + f":{os.path.abspath(BaseConstants.DRIVERS_PATH)}"
+    )
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -23,7 +25,9 @@ def pytest_runtest_makereport(item, call):
     result = outcome.get_result()
 
     if result.failed:
-        driver = [item.funcargs[arg] for arg in item.funcargs if arg.endswith("_page")][0].driver
+        driver = [
+            item.funcargs[arg] for arg in item.funcargs if arg.endswith("_page")
+        ][0].driver
         file_name = f"{item.name}_{datetime.datetime.today().strftime('%Y-%m-%d_%H:%M:%S')}.png"
         file_path = "/Users/deniskondratuk/PycharmProjects/qa-complex-app-g4/screenshots"
         driver.save_screenshot(os.path.join(file_path, file_name))
