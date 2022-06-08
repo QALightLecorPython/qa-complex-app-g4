@@ -20,4 +20,4 @@ jobs:
           pip install pylint==2.13.9
       - name: Analysing the code with pylint
         run: |
-          pylint `ls -R|grep .py$|xargs`
+          pylint tests pages
